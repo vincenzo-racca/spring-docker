@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  db:
+    container_name: pg_container
+    image: postgres
+    restart: "no"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: spring-docker
+    ports:
+      - "5432:5432"
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: "no"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: user
+    ports:
+      - "5050:80"
+    depends_on:
+      - "db"
+  spring-docker:
+    container_name: spring-docker
+    image: vincenzoracca/spring-docker:0.0.1-SNAPSHOT
+    #    if you want build image from Dockerfile, use build instead of image
+    #    build: .
+    restart: "no"
+    environment:
+      - BPL_JVM_THREAD_COUN=50
+      - BPL_DEBUG_ENABLED=true
+      - BPL_DEBUG_PORT=9090
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://pg_container:5432/spring-docker
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+    ports:
+      - "8081:8081"
+      - "9090:9090"
+    depends_on:
+      - "db"
