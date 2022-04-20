@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:14:////spring-docker
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  sql:
+    init:
+      mode: always
