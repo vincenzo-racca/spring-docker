@@ -30,7 +30,7 @@ services:
 #    build: .
     restart: "no"
     environment:
-      - BPL_JVM_THREAD_COUN=50
+      - BPL_JVM_THREAD_COUNT=50
       - BPL_DEBUG_ENABLED=true
       - BPL_DEBUG_PORT=9090
       - SPRING_DATASOURCE_URL=jdbc:postgresql://pg_container:5432/spring-docker
